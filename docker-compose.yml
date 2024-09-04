@@ -24,7 +24,6 @@ services:
     command: npm run start:dev
     environment:
       - PORT=3001
-      - HOST=localhost
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=file:./dev.db
 
@@ -35,7 +34,6 @@ services:
     command: npm run start:dev
     environment:
       - PORT=3002
-      - HOST=localhost
       - NATS_SERVERS=nats://nats-server:4222
       - DATABASE_URL=postgresql://postgres:123456@orders-db:5432/orders-db?schema=public
     depends_on:
