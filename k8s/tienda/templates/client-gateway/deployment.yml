@@ -20,5 +20,10 @@ spec:
       containers:
         - image: southamerica-east1-docker.pkg.dev/productsapp-microservices/image-registry/client-gateway
           name: client-gateway
+          env:
+            - name: PORT
+              value: "3000"
+            - name: NATS_SERVERS
+              value: "nats://nats-server:4222"
           resources: {}
 status: {}
