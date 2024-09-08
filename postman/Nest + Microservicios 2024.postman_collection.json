@@ -1,0 +1,616 @@
+{
+	"info": {
+		"_postman_id": "581febf7-3ee3-400a-af17-698efb2ef8e2",
+		"name": "Nest + Microservicios 2024",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4677971"
+	},
+	"item": [
+		{
+			"name": "ProductsApp",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Register user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Nelson Cadenas\",\r\n    \"email\": \"nca14783@gmail.com\",\r\n    \"password\": \"Abc123$$\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/api/auth/register",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"if( jsonData ){\r",
+											"    pm.environment.set(\"token\", jsonData.token);\r",
+											"}\r",
+											"else{\r",
+											"    console.log('The token was not updated');\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"nca1478@gmail.com\",\r\n    \"password\": \"Abc123$$\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/api/auth/login",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Verify token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"\r",
+											"if( jsonData ){\r",
+											"    pm.environment.set(\"token\", jsonData.token);\r",
+											"}\r",
+											"else{\r",
+											"    console.log('The token was not updated');\r",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/api/auth/verify",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"verify"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Producto Test 4\",\r\n    \"price\": 100\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/api/products",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/api/products?page=1&limit=10",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"products"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findOne",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/api/products/1",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Producto Actualizado otra vez\",\r\n    \"price\": 100\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/api/products/48",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"48"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/api/products/48",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"48"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Orders",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"items\": [\r\n        {\r\n            \"productId\": 6,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"productId\": 5,\r\n            \"quantity\": 4\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/api/orders",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/api/orders?page=1&limit=10&status=PAID",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "status",
+											"value": "PAID"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll by status",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/api/orders/status/PENDING?page=1&limit=10",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"status",
+										"PENDING"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "limit",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findOne",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/api/orders/4d1325af-d18e-4607-8573-5666e54e91ff",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"4d1325af-d18e-4607-8573-5666e54e91ff"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "change status",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{    \r\n    \"status\": \"PAID\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/api/orders/18db8e83-6ce3-4383-8025-0c8fef792e5c",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"api",
+										"orders",
+										"18db8e83-6ce3-4383-8025-0c8fef792e5c"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Payments",
+					"item": [
+						{
+							"name": "Create Payment Session",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"orderId\": \"XYZ123\",\r\n    \"currency\": \"usd\",\r\n    \"items\": [\r\n        {\r\n            \"name\": \"Teclado Microsoft\",\r\n            \"price\": 100,\r\n            \"quantity\": 2\r\n        },\r\n        {\r\n            \"name\": \"Mouse Genius\",\r\n            \"price\": 50.01,\r\n            \"quantity\": 3\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url_payments}}/payments/create-payment-session",
+									"host": [
+										"{{api_url_payments}}"
+									],
+									"path": [
+										"payments",
+										"create-payment-session"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Success",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url_payments}}/payments/success",
+									"host": [
+										"{{api_url_payments}}"
+									],
+									"path": [
+										"payments",
+										"success"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url_payments}}/payments/cancel",
+									"host": [
+										"{{api_url_payments}}"
+									],
+									"path": [
+										"payments",
+										"cancel"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Stripe Webhook",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{api_url_payments}}/payments/webhook",
+									"host": [
+										"{{api_url_payments}}"
+									],
+									"path": [
+										"payments",
+										"webhook"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Health-check-gateway",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}",
+							"host": [
+								"{{api_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Health-check-webhook",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url_payments}}",
+							"host": [
+								"{{api_url_payments}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
